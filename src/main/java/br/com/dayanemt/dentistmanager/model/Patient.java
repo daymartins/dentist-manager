@@ -2,7 +2,6 @@ package br.com.dayanemt.dentistmanager.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,7 +22,7 @@ public class Patient {
 
     private String street;
 
-    private String number;
+    private Integer number;
 
     private String complement;
 
@@ -121,11 +120,11 @@ public class Patient {
         this.street = street;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
