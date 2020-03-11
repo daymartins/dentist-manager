@@ -1,5 +1,8 @@
 package br.com.dayanemt.dentistmanager.controller.dto;
 
+import br.com.dayanemt.dentistmanager.model.Patient;
+import org.springframework.data.domain.Page;
+
 public class PatientListDTO {
 
     private Long id;
@@ -7,11 +10,11 @@ public class PatientListDTO {
     private String telefone;
     private String email;
 
-    public PatientListDTO(Long id, String nome, String telefone, String email) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
+    public PatientListDTO(Patient patient) {
+        this.id = patient.getId();
+        this.nome = patient.getName();
+        this.telefone = patient.getCellphone();
+        this.email = patient.getEmail();
     }
 
     public Long getId() {
@@ -28,5 +31,9 @@ public class PatientListDTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public static Page<PatientListDTO> convert (Page<Patient> patients){
+        return patients.map(PatientListDTO::new);
     }
 }

@@ -1,5 +1,9 @@
 package br.com.dayanemt.dentistmanager.controller.dto;
 
+import br.com.dayanemt.dentistmanager.model.Patient;
+import org.springframework.data.domain.Page;
+
+import java.util.Calendar;
 import java.util.Date;
 
 public class PatientDTO {
@@ -31,179 +35,129 @@ public class PatientDTO {
     private String medicines;
     private String observations;
 
-    public Long getId() {
-        return id;
+    public PatientDTO(Patient patient) {
+        Integer yearsOld = null;
+        if (patient.getBirthDate() != null) {
+            Calendar today = Calendar.getInstance();
+            Calendar dayBirth = Calendar.getInstance();
+            dayBirth.setTime(patient.getBirthDate());
+
+            yearsOld = today.get(Calendar.YEAR) - dayBirth.get(Calendar.YEAR);
+        }
+
+        this.id = patient.getId();
+        this.name = patient.getName();
+        this.telephone = patient.getTelephone();
+        this.cellphone = patient.getCellphone();
+        this.email = patient.getEmail();
+        this.street = patient.getStreet();
+        this.number = patient.getNumber();
+        this.complement = patient.getComplement();
+        this.neighborhood = patient.getNeighborhood();
+        this.city = patient.getCity();
+        this.state = patient.getState();
+        this.postalCode = patient.getPostalCode();
+        this.birthDate = patient.getBirthDate();
+        this.age = yearsOld;
+        this.weight = patient.getWeight();
+        this.height = patient.getHeight();
+        this.allergy = patient.getAllergy();
+        this.disease = patient.getDisease();
+        this.highBloodPressure = patient.getHighBloodPressure();
+        this.diabetes = patient.getDiabetes();
+        this.medicines = patient.getMedicines();
+        this.observations = patient.getObservations();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getTelephone() {
         return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
     }
 
     public String getCellphone() {
         return cellphone;
     }
 
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public Integer getNumber() {
         return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
     public String getComplement() {
         return complement;
     }
 
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
-
     public String getNeighborhood() {
         return neighborhood;
-    }
-
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getState() {
         return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public Integer getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
-    }
-
     public Date getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
     }
 
     public Integer getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public Double getWeight() {
         return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
     }
 
     public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Double height) {
-        this.height = height;
-    }
-
     public String getAllergy() {
         return allergy;
-    }
-
-    public void setAllergy(String allergy) {
-        this.allergy = allergy;
     }
 
     public String getDisease() {
         return disease;
     }
 
-    public void setDisease(String disease) {
-        this.disease = disease;
-    }
-
     public Boolean getHighBloodPressure() {
         return highBloodPressure;
-    }
-
-    public void setHighBloodPressure(Boolean highBloodPressure) {
-        this.highBloodPressure = highBloodPressure;
     }
 
     public Boolean getDiabetes() {
         return diabetes;
     }
 
-    public void setDiabetes(Boolean diabetes) {
-        this.diabetes = diabetes;
-    }
-
     public String getMedicines() {
         return medicines;
-    }
-
-    public void setMedicines(String medicines) {
-        this.medicines = medicines;
     }
 
     public String getObservations() {
         return observations;
     }
 
-    public void setObservations(String observations) {
-        this.observations = observations;
+    public static Page<PatientDTO> convert(Page<Patient> patients) {
+        return patients.map(PatientDTO::new);
     }
 }
